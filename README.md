@@ -26,9 +26,9 @@ The method internally can be broken into the following procedure.
 3. Perform a PCA (in the manner of an SSA https://en.wikipedia.org/wiki/Singular_spectrum_analysis)
 4. Use the eigenvector coefficients associated with first component (explaining most variance) from the resulting scores of the PCA as the component representing the variance in the signal.
 5. Convert that component into a lagged timeseries matrix of same lag size N.
-6. For each window perform pairwise comparison of variance in each window in order to compute a score indicating whether the ration of variance is significant based on the ftest or bartletts test.
+6. For each window perform pairwise comparison of variance in each window in order to compute a score indicating whether the ratio of variance is significant based on the ftest or bartletts test.
 
-This last step utilises the tests the null hypothesis where the variances are assumed equal between the pairs of windows.
+This last step utilises the tests for the null hypothesis where the variances are assumed equal between the pairs of windows.
 
 The result is a table, the first two columns "date1", "date2" indicate the start timestamp of the first window, and the start timestamp of the second window respectively. The width of the window is the stepsize which the process uses to step through the generated lags.
 The other columns include a number of statistics for the windows as well as the p values for the variance tests.
