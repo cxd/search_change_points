@@ -74,6 +74,8 @@ computeCorSteps <- function(lagData, totalVar, cols=c("t","tm1","tm2", "tm3", "t
       v <- var(set1, set2)
       mu <- mean(c(set1, set2))
       
+      var1 <- var(set1)
+      var2 <- var(set2)
       varRatio <- var(set1)/var(set2)
       
       df1 <- length(set1) - 1
@@ -97,6 +99,8 @@ computeCorSteps <- function(lagData, totalVar, cols=c("t","tm1","tm2", "tm3", "t
       cor=c[1],
       var=v[1],
       mu=mu[1],
+      var1=var1[1],
+      var2=var2[1],
       varRatio=varRatio[1],
       ftest_pval=ftest_pval[1],
       ftest_reject=ftest_reject[1],

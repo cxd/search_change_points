@@ -1,7 +1,4 @@
-source("lib/loadconfig.R")
-source("lib/load_exitpoint_data.R")
 source("lib/search_changepoints.R")
-source("lib/wavelet_utils.R")
 
 data("WWWusage")
 
