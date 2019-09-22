@@ -195,7 +195,7 @@ plot_interesting_changes <- function(data, xcol, ycol, result, appname, method="
       #browser()
       xid1 <- which(data[,xcol] %in% result$corData[i,]$date2)
       
-      print(data[xid1,xcol])
+      #print(data[xid1,xcol])
       
       xid2 <- xid1 + result$stepSize
       
