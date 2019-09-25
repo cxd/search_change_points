@@ -186,7 +186,12 @@ plot_interesting_changes <- function(data, xcol, ycol, result, appname, method="
     idx1 <- idx3
   }
   data <- data[!is.na(data[,ycol]),]
+  
+  # Add extra space to right of plot area; change clipping to figure
+  par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+  
   plot(data[,xcol], as.numeric(data[,ycol]), type="b", col="blue", xlab=xcol, ylab=ycol, main=paste("Changes in ", appname))
+  
   
   minY <- min(data[,ycol])
   maxY <- max(data[,ycol])
@@ -196,19 +201,52 @@ plot_interesting_changes <- function(data, xcol, ycol, result, appname, method="
   if (length(idx1) > 0) {
     for(i in idx1) {
       
-      #browser()
-      xid1 <- which(data[,xcol] %in% result$corData[i,]$date2)
       
-      #print(data[xid1,xcol])
+      ## we want the columns of data between index1 and index2
+      xid2 <- which(data[,xcol] %in% result$corData[i,]$date1)
       
-      xid2 <- xid1 + result$stepSize
-      
-      if (xid2 > nrow(data)) {
-        xid2 = nrow(data)
+      ## first window is xid2 minus stepsize
+      xid1 <- xid2 - result$stepSize
+      if (xid1 <= 0) {
+        xid1 <- 1
       }
       
-      rect(data[xid1,xcol], minY, data[xid2,xcol], maxY, border="red", col=rgb(1.0,0,0,alpha=0.2))
+      xid3 <- which(data[,xcol] %in% result$corData[i,]$date2)
+      
+      rect(data[xid1,xcol], minY, data[xid2,xcol], maxY, border="orange", col=rgb(1.0,1.0,0,alpha=0.2))
+      rect(data[xid2,xcol], minY, data[xid3,xcol], maxY, border="red", col=rgb(1.0,0,0,alpha=0.2))
     }
   }
+  
+  #browser()
+  # plot the loadings
+  minX <- min(result$scoreLags$date)
+  maxX <- max(result$scoreLags$date)
+  id1 <- which(data[,xcol] %in% minX) - result$stepSize + 1
+  if (id1 <= 0)
+  {
+    id1 <- 1
+  }
+  id2 <- which(data[,xcol] %in% maxX)
+  ids <- id1:id2
+  x <- data[ids,xcol]
+  par(new=TRUE)
+  plot(x, result$pr$scores[,1], col="green", type="l", xlab="", ylab="", 
+       axes=FALSE,
+       ylim=c(min(result$pr$scores[,1]),max(result$pr$scores[,1])),
+       pch=3)
+  axis(4, ylim=c(min(result$pr$scores[,1]),max(result$pr$scores[,1])), col="green",col.axis="green",las=1)
+  
+  par(new=FALSE)
+  
+  
+  legend("topleft", legend=c("Prev", "Next"),
+         col=c("orange", "red"),
+         lty=1, cex=0.8, pch=c(15,15))
+  
+  legend("topright", legend=c("Data", "PCA\nComp.1"),
+         col=c("blue", "green"),
+         lty=1, cex=0.8, pch=c(1,3),
+         inset=c(-0.4,0))
   
 }

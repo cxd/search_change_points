@@ -2,7 +2,6 @@
 
 The procedure is illustrated in the notebook:
 
-
 https://colab.research.google.com/drive/13oRwkLW27TJldA7nr7eITv8mlKgLI19O
 
 The examples in this notebook make use of two different types of data sets from the R data package.
